@@ -48,15 +48,15 @@
   ```
 
 - Argument type
-  
-    ```typescript
-    function add( a: number, b: number ): number { return a + b };
-    ```
+
+  ```typescript
+  function add(a: number, b: number): number { return a + b };
+  ```
 
 - Function type
 
   ```typescript
-  let myAdd: ( a : number, b: number ) => number;
+  let myAdd: (a : number, b: number) => number;
   myAdd = add;
   ```
 
@@ -92,7 +92,7 @@
 ```typescript
 class Person {
   name: string;
-  private type: string;   // can't be accessed from outside
+  private type: string;        // can't be accessed from outside
   protected age: number = 28;  // can't be accessed from outside but can be inherited
 
   constructor(name: string) {
@@ -120,10 +120,42 @@ person.printAge();        // error
 ```typescript
 class Han extends Person {
   constructor() {
-    super('Han');           // call parent class
-    console.log(this.age);
-    console.log(this.type); // can't access parent's private property
+    super('Han');           // call parent/base class' constructor
+    console.log(this.age);  // access parent/base class' public property
+    console.log(this.type); // can't access parent/base class' private property
   }
 }
 const han = new Han();
+```
+
+```typescript
+class Animal {
+  name: string;
+  constructor(theName: string) { this.name = theName; }
+  move(distanceInMeters: number = 0) {
+    console.log(`${this.name} moved ${distanceInMeters}m.`);
+  }
+}
+
+class Snake extends Animal {
+  constructor(name: string) { super(name); }
+  move(distanceInMeters = 5) {
+    console.log('Slithering...');
+    super.move(distanceInMeters);
+  }
+}
+
+class Horse extends Animal {
+  constructor(name: string) { super(name); }
+  move(distanceInMeters = 45) {
+    console.log('Galloping...');
+    super.move(distanceInMeters);
+  }
+}
+
+let sam = new Snake("Sammy the Python");
+let tom: Animal = new Horse("Tommy the Palomino");
+
+sam.move();
+tom.move(34);
 ```
